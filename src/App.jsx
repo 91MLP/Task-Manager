@@ -6,7 +6,13 @@ import TaskAddingPage from "./pages/TaskAddingPage";
 function App() {
   const [taskList, setTaskList] = useState(tasksData);
   const [selectId, setSelectId] = useState(null);
+  const [optionStatus, setOptionStatus] = useState("all");
   const seletedTask = taskList.find((t) => t.id === selectId);
+  const options = taskList.filter((t) => {
+    if (optionStatus == "complete") return t.completed;
+    if (optionStatus == "incomplete") return !t.completed;
+    return true;
+  });
 
   function handleDetail(tasksData) {
     setSelectId(tasksData.id);
@@ -19,16 +25,24 @@ function App() {
       prev.map((p) => (p.id === id ? { ...p, completed: !p.completed } : p)),
     );
   }
+  function handleOption(e) {
+    setOptionStatus(e.target.value);
+  }
   return (
     <div>
+      <TaskAddingPage tasksList={taskList} setTaskList={setTaskList} />
+      <select name="" id="" onChange={handleOption}>
+        <option value="all task">all tasks</option>
+        <option value="complete">complete</option>
+        <option value="incomplete">incomplete</option>
+      </select>
       <TaskPage
-        tasksList={taskList}
+        tasksList={options}
         seletedTask={seletedTask}
         deleteTaskButton={handleTaskDelete}
         taskCompleteButton={handleComplete}
         taskDetailButton={handleDetail}
       />
-      <TaskAddingPage  tasksList={taskList} setTaskList={setTaskList}/>
     </div>
   );
 }
