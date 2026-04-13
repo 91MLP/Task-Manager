@@ -7,10 +7,6 @@ export default function TaskPage({
 }) {
   return (
     <div>
-      {/* <input type="text" value={text} onChange={handleTextChangeButton} />
-      <button onClick={addTaskButton} disabled={text ? false : true}>
-        Add Task
-      </button> */}
       {tasksList.map((t) => {
         return (
           <li
